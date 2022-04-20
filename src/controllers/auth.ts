@@ -52,9 +52,6 @@ const registerUser = async (req: Request, res: Response) => {
                     (err, _result) => {
                         if (err) {
                             throw err;
-                            return res.status(400).send({
-                                msg: err
-                            });
                         }
                         return res.status(201).send({
                             msg: 'The user has been registerd with us!'

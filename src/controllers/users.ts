@@ -29,6 +29,7 @@ const getUser = async (req: Request, res: Response) => {
             datalog.query(query,[req.body.name,req.params.id],(err, rows) => {
                 if (err) throw err;
                 console.log(rows);
+                res.send({message:"updated successfully"})
             });
     };
     const deleteUser = async (req: Request, res: Response) => {
@@ -39,11 +40,13 @@ const getUser = async (req: Request, res: Response) => {
             });
     };
     const addUser = async (req: Request, res: Response) => {
-        let query = `INSERT INTO users (name, usertype,email, password) VALUES (${datalog.escape(req.body.name)},${datalog.escape(req.body.email)},${datalog.escape(req.body.password)},${(parseInt(req.body.usertype))}`;
+        const {name,usertype,email,password} = req.body;
+        let query = `INSERT INTO users (name, usertype,email, password) VALUES(${"'"+name+"','"+usertype+"','"+email+"','"+password+"'"})`
+        
         // console.log(query)
         datalog.query(query, (err: any, rows) => {
             if (err) throw err;
-            res.send({ Done: "Done" })
+            res.send({ Data: "Added successfully" })
         });
     };
 
